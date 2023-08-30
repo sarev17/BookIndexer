@@ -16,13 +16,12 @@ return new class extends Migration
         Schema::create('indices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('book_id');
-            $table->unsignedBigInteger('parent_index_id')->nullable();
+            $table->integer('parent_index_id')->nullable();
             $table->text('title');
             $table->integer('page');
             $table->timestamps();
 
             $table->foreign('book_id')->references('id')->on('books');
-            $table->foreign('parent_index_id')->references('id')->on('indices');
         });
     }
 
@@ -35,7 +34,6 @@ return new class extends Migration
     {
         Schema::table('indices', function (Blueprint $table) {
             $table->dropForeign(['book_id']);
-            $table->dropForeign(['parent_index_id']);
         });
         Schema::dropIfExists('indices');
     }
